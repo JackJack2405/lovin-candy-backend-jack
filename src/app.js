@@ -10,7 +10,7 @@ app.use("/api", apiRoutes);
 
 // error handling
 app.use((req, res, next) => {
-  new Error (`Not found: ${req.method} ${req.originalUrl}`)
+  const error = new Error (`Not found: ${req.method} ${req.originalUrl}`)
   error.name = "NotFoundError"
   error.status = 404
   next(error);

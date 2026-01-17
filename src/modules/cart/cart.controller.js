@@ -79,3 +79,36 @@ export const addItemToCart = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const getCartID = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const doc = await Cart.findById(id)
+    if (!doc) {
+      const error = new Error("Cart not found");
+      return next(error);
+    }
+    return res.status(200).json({
+      success: true,
+      data: doc,
+    });
+  } catch (error) {
+    error.status = 500;
+    error.name = error.name || "DatabaseError";
+    error.message = error.message || "Failed to get a cart";
+    return next(error);
+  }
+};
+
+export const getCart = async (req, res, next) => {
+  try {
+    const carts = await Cart.find()
+    return res.status(200).json({
+      success: true,
+      data: carts,
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

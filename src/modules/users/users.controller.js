@@ -37,7 +37,7 @@ export const delAddress = async (req, res, next) => {
   try {
     const updateUser = await User.findByIdAndUpdate(
       id,
-      { $set: {address: ""} },
+      { $unset: { address: "" } },
       { new: true }
     )
 
@@ -56,6 +56,7 @@ export const delAddress = async (req, res, next) => {
     next(error);
   }
 }
+
 export const updateAddress = async (req, res, next) => {
   const { id } = req.params;
   const { address } = req.body;

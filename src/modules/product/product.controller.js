@@ -7,9 +7,17 @@ export const getProductId = async (req, res, next) => {
   const { id } = req.params;
 
   try {
+    if (!mongoose.isValidObjectId(id)) {
+      const error = new Error("Invalid product id");
+      error.status = 400;
+      return next(error);
+    }
+
     const doc = await Product.findById(id)
+
     if (!doc) {
       const error = new Error("Product not found");
+      error.status = 404;
       return next(error);
     }
     return res.status(200).json({
@@ -30,12 +38,13 @@ export const getProducts = async (req, res, next) => {
     const limit = Math.min(50, Math.max(1, Number(req.query.limit || 10)));
 
     const q = (req.query.q || "").trim();
-    const category_id = (req.query.category_id || "").trim();
+    const category = (req.query.category || "").trim();
 
     const filter = {};
     if (q) filter.name = { $regex: q, $options: "i" };
-    if (category_id && mongoose.isValidObjectId(category_id)) {
-      filter.category_id = category_id;
+
+    if (category) {
+      filter.category = { $regex: `^${category}$`, $options: "i" };
     }
 
     const [data, total] = await Promise.all([
@@ -132,7 +141,7 @@ export const createProduct = async (req, res, next) => {
       description,
       price,
       stock,
-      category: category ?? "GENERAL", // ⭐ default ทาง logic
+      category: category ? category.toUpperCase() : "GENERAL", // ⭐ default ทาง logic
       images,
     });
 
@@ -192,3 +201,15 @@ export const updateProductPopularity = async (req, res, next) => {
   }
 };
 
+export const updateProduct = async (req, res, next) => {
+  try {
+      const doc = await Product.findByIdAndUpdate(
+        req.params.id, 
+        req.body, { new: true });
+      if (!doc) 
+        return res.status(404).json({ success: false, message: "Product not found" });
+      return res.status(200).json({ success: true, data: doc });
+    } catch (err) {
+      next(err);
+    }
+}

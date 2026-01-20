@@ -1,7 +1,8 @@
-import { Order } from "./order.model";
+import { Order } from "./order.model.js";
+import mongoose from "mongoose";
 
 export const createOrder = async (req, res, next) => {
-  const { order_id, user_id, status } = req.body;
+  const { user_id, status } = req.body;
 
   try {
     if (!user_id) {

@@ -44,18 +44,27 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-    "name": "Test Candy Bar",
-    "description": "Delicious chocolate candy bar",
-    "price": 1.99,
-    "stock": 100,
-    "category": "Candy"
+    "name": "Test Barbara1",
+    "description": "Delicious barbara1 chocolate",
+    "price": 5.99,
+    "stock": 50,
+    "category": "chocolate"
 }
 
 ###
 GET http://localhost:3000/api/products/696897940f34cb9f5d50c48f
 
 ###
-DELETE http://localhost:3000/api/products/696bc9b752c05ee12dbfc8d9
+PUT http://localhost:3000/api/products/696e7878dc53bb780fcc29b7
+Content-Type: application/json
+
+{
+    "price": 6.49,
+    "stock": 60
+}
+
+###
+DELETE http://localhost:3000/api/products/696e7794fbab4b8cfd05c370
 
 ### cart test
 GET http://localhost:3000/api/cart/
@@ -65,9 +74,35 @@ POST http://localhost:3000/api/cart/items
 Content-Type: application/json
 
 {
-    "productId": "696897940f34cb9f5d50c48f",
-    "quantity": 4
+    "productId": "696e7878dc53bb780fcc29b7",
+    "quantity": 5
 }
 
 ###
 DELETE http://localhost:3000/api/cart/696a9c74e65437a9091e146e
+
+### category test
+GET http://localhost:3000/api/products/categories
+
+###
+POST http://localhost:3000/api/products/categories
+Content-Type: application/json
+
+{
+    "name": "Chocolate",
+    "description": "Tasty chocolate candies"
+}
+
+###
+PUT http://localhost:3000/api/products/categories/696e7268a620c20e72c2b998
+Content-Type: application/json
+
+{
+    "description": "Delicious gummy candies"
+}
+
+###
+DELETE http://localhost:3000/api/products/categories/696e7268a620c20e72c2b998
+
+###
+GET http://localhost:3000/api/products?category=CHOCOLATE

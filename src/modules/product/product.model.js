@@ -6,8 +6,12 @@ const productSchema = new mongoose.Schema(
     description: String,
     price: { type: Number, required: true },
     stock: { type: Number, default: 0 },
-    category_id: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-    popularity_score: { type: Number, default:0},
+    category: { type: String, required: true, ref: "Category" },
+    imageUrl: { type: String, required: true },
+    popularity_score: {
+      type: Number,
+      default:0,
+      index: true},
   },
   { timestamps: true }
 );

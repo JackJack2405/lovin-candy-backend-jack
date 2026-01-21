@@ -126,11 +126,11 @@ Authorization: Bearer {{token}}
 {
     "items": [
         {
-            "product_id": "697046135656ead08646bc15",
-            "quantity": 1
-        }
-    ]
+            "product_id": "697045a65656ead08646bc11",
+            "quantity": 3
+        }]
 }
+
 
 ### Get Orders Test
 GET http://localhost:3000/api/orders
@@ -149,6 +149,15 @@ Content-Type: application/json
 ### Delete Order Test
 DELETE http://localhost:3000/api/orders/69706991a0cdea794a58dcd0
 Authorization: Bearer {{token}}
+
+### Update Order Status
+PUT http://localhost:3000/api/orders/697082c9e32e98b1bd554cf2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "status": "IN-TRANSIT"
+}
 
 ### User Profile Test
 GET http://localhost:3000/api/users/me
@@ -189,8 +198,8 @@ Authorization: Bearer {{token}}
 {
     "items": [
         {
-            "product_id": "696e7878dc53bb780fcc29b7",
-            "quantity": 1
+            "product_id": "6970483f5656ead08646bc23",
+            "quantity": 2
         }
     ]
 }
